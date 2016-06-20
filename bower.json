@@ -1,0 +1,13 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "authors": "Tracy Lei <tracylei.yq@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "^1.4.9",
+    "angular-ui-router": "^0.3.0",
+    "bootstrap": "^3.3.6"
+  }
+}
