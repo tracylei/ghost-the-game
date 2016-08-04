@@ -28,38 +28,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(stylus.middleware(
+
+	
 	{
 		src:__dirname + '/public',
 		compile: compile //Config object's compile function
 	}
 ));
 // ===============================================================
-
-// //Connect to database using connection string
-// //localhost: hostname
-// //mydatabase: db name => will be created if it doesn't already exist
-// //Use mongod in terminal to open connection
-// mongoose.connect('mongodb://localhost/mydatabase');
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error...'));
-// //Listen to "open" event once
-// db.once('open', function callback(){
-// 	console.log('mydatabase db opened');
-// });
-
-// //Message schema to test retrieval from db
-// //messageSchema holds new schema, passing in object that describes the schema of this collection
-// var messageSchema = mongoose.Schema({message: String});
-// var Message = mongoose.model('Message', messageSchema);
-// var mongoMessage; //Will hold data pulled out of db
-// //Use findOne() to find a single document
-// //no params given => first document in collection will be returned
-// //.exec() allows a callback to be passed in
-// Message.findOne().exec(function(err, messageDocFound){
-// 	//messageDocFound is the document found
-// 	mongoMessage = messageDocFound.message;
-// });
-
 
 
 // ========================== Routing ========================
@@ -82,4 +58,13 @@ var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
 	console.log("connected");
+	socket.on('disconnect', function() {
+	    io.emit('user disconnected');
+	    console.log('disconnected');
+	});
+	socket.on('key press', function(key) {
+		console.log("detected key press on server side");
+		console.log("Key pressed: " + String.fromCharCode(key));
+		var letter = String.fromCharCode(key);
+	});
 });

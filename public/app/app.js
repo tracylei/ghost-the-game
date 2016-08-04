@@ -22,13 +22,13 @@ app.config(function($stateProvider, $urlRouterProvider){
 				}
 			}
 		})
-		.state('index.first', {
-			url: '^/first',
-			templateUrl: 'partials/first',
+		.state('index.game', {
+			url: '^/game',
+			templateUrl: 'partials/game',
 		})
-		.state('index.second', {
-			url: '^/second',
-			templateUrl: 'partials/second'
+		.state('index.help', {
+			url: '^/help',
+			templateUrl: 'partials/help'
 		});
 
 });
@@ -39,8 +39,16 @@ app.config(['$locationProvider', function($locationProvider){
 
 app.controller('MainCtrl', function($scope){
 	console.log("mainctrl");
-	var socket = io.connect("http://localhost:3030");
-	// socket.on('connect', function(data){
-	// 	console.log("connected from mainctrl");
-	// });
+	var socket = io.connect("http://localhost:3030");	
+	socket.on('connect', function(data){
+		console.log("connected from mainctrl");
+	});
+
+	//Key press
+	$scope.press = function($event){
+		console.log("detected key press on client side");
+		socket.emit('key press', $event.keyCode);
+	};
+
+
 });

@@ -1,4 +1,5 @@
 div
-	a(ui-sref="index.first", class="btn btn-primary") first
-	a(ui-sref="index.second", class="btn btn-primary") second
+	input(type="text" ng-keypress="press($event)")
+	a(ui-sref="index.game", class="btn btn-primary") Play
+	a(ui-sref="index.help", class="btn btn-primary") Help
 div(ui-view="")
