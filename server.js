@@ -1,11 +1,15 @@
 
 // ========================== Modules ==========================
-var express 	= require('express');
-	stylus 		= require('stylus');
-	logger 		= require('morgan');
-	bodyParser 	= require('body-parser');
-	mongoose 	= require('mongoose');
-	http		= require('http');
+var express 		= require('express');
+var stylus 			= require('stylus');
+var logger 			= require('morgan');
+var bodyParser 		= require('body-parser');
+var http			= require('http');
+var passport 		= require('passport');
+var session 		= require('express-session');
+// ========================== Routes ===========================
+var db 				= require('./database');
+var authentication 	= require('./routes/authentication');
 // =============================================================
 
 
@@ -28,17 +32,24 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(stylus.middleware(
-
-	
 	{
 		src:__dirname + '/public',
 		compile: compile //Config object's compile function
 	}
 ));
-// ===============================================================
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(session(
+	{
+		secret: 'securedsession',
+		resave: false,
+		saveUninitialized: true
+}));
+// ================================================================
 
 
-// ========================== Routing ========================
+// ========================== Routing =============================
+app.use('/', authentication);
 app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
@@ -46,7 +57,7 @@ app.get('/partials/:partialPath', function(req, res){
 app.get('*', function(req, res){
 	res.render('index');
 });
-// ===========================================================
+// ================================================================
 
 
 var port = 3030;

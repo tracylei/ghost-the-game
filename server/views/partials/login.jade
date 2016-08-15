@@ -1,0 +1,9 @@
+div.well(style="width: 50%; margin: 10% auto;")
+	form(role="form" style="margin: 10% 10% 0 10%")
+		.form-group
+			label(for="username") Username
+			input.form-control(ng-model="username")
+		.form-group
+			label(for="pwd") Password
+			input.form-control(type="password" ng-model="password")
+	button(ng-click="login()" type="button" class="btn btn-primary" style="margin: 0 0 10px 80%") Login
