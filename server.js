@@ -8,9 +8,9 @@ var http			= require('http');
 var passport 		= require('passport');
 var session 		= require('express-session');
 // ========================== Routes ===========================
-var db 				= require('./database');
 var authentication 	= require('./routes/authentication');
 // =============================================================
+var db 				= require('./database');
 
 
 //Set default value to 'development' if process.env.NODE_ENV isn't set
