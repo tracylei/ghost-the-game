@@ -25,6 +25,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 router.route('/login')
+		.get(function(req, res){
+			res.render('index');
+		})
 		.post(passport.authenticate('local'), function(req, res){
 			res.sendStatus(200);
 		});

@@ -45,6 +45,13 @@ app.use(session(
 		resave: false,
 		saveUninitialized: true
 }));
+function isAuthenticated(req, res, next){
+	if(req.session.user == null){
+		res.redirect('/login');
+	}else{
+		next();
+	}
+};
 // ================================================================
 
 
@@ -54,7 +61,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
 });
-app.get('*', function(req, res){
+app.get('*', isAuthenticated, function(req, res){
 	res.render('index');
 });
 // ================================================================
