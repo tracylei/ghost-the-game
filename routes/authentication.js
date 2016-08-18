@@ -33,15 +33,26 @@ router.route('/login')
 
 router.route('/signup')
 	.post(function(req, res){
-		var user = new User();
-		user.username = req.username;
-		user.password = req.password;
-		user.save(function(err){
-			if(err)
-				res.send(err);
-			else
-				res.sendStatus(200);
+
+		User.findOne({'username': req.body.username}, function(user){
+			if (user == null) {
+				var user = new User();
+				user.username = req.body.username;
+				user.password = req.body.password;
+				user.save(function(err){
+					if(err)
+						res.json({"message": err});
+					else
+						res.json({"message": "Success"});
+				});
+			}
+			else {
+				console.log("Username unavailable");
+				res.json({"message": "UsernameUnavailableError"});
+			}
 		});
+
+		
 	});
 
 module.exports = router;

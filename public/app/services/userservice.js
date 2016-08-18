@@ -6,4 +6,10 @@ app.service('UserService', function($http){
 			return response.data;
 		});
 	};
+
+	this.signup = function(username, password){
+		return $http.post('/signup', {"username": username, "password": password}).then(function(response){
+			return response.data;
+		});
+	};
 });

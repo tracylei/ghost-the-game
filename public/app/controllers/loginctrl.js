@@ -13,6 +13,13 @@ app.controller('LoginCtrl', function($scope, $http, $location, UserService){
 	};
 
 	$scope.signup = function(){
-		
-	}
+		UserService.signup($scope.username, $scope.password).then(function (data){
+			if(data.message == "Success"){
+				$location.url('/');
+				UserService.login($scope.username, $scope.password);
+			}
+			else
+				console.log(data.message); //error
+		});
+	};
 });
