@@ -61,6 +61,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
 });
+app.get('/new', isAuthenticated, function(req, res){
+	res.render('new');
+})
 app.get('*', isAuthenticated, function(req, res){
 	res.render('index');
 });
@@ -76,6 +79,7 @@ var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
 	console.log("connected");
+	
 	socket.on('disconnect', function() {
 	    io.emit('user disconnected');
 	    console.log('disconnected');
@@ -84,5 +88,11 @@ io.on('connection', function(socket){
 		console.log("detected key press on server side");
 		console.log("Key pressed: " + String.fromCharCode(key));
 		var letter = String.fromCharCode(key);
+		console.log(socket.rooms[socket.id]);
+		socket.broadcast.to(socket.rooms[socket.id]).emit('key received', letter);
 	});
+	socket.on('join room', function(room){
+		console.log("joining room");
+		socket.join(room); //join() is asynchronous!
+	})
 });

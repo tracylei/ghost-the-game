@@ -12,7 +12,12 @@ app.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'partials/login',
 			controller: 'LoginCtrl'
 		})
-		.state('index', {
+		.state('new', {
+			url: '/new',
+			templateUrl: 'partials/new',
+			controller: 'NewRoomCtrl'
+		})
+		.state('home', {
 			url: '/',
 			views: {
 				'':{

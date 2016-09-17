@@ -1,5 +1,5 @@
 div.well(style="width: 50%; margin: 10% auto;")
-	form(role="form" style="margin: 10% 10% 0 10%")
+	form(role="form" style="margin: 5% 10% 0 10%")
 		.form-group
 			label(for="username") Username
 			input.form-control(ng-model="username")
@@ -7,7 +7,7 @@ div.well(style="width: 50%; margin: 10% auto;")
 			label(for="pwd") Password
 			input.form-control(type="password" ng-model="password")
 	div.container-fluid
-		div.col-sm-10
-			button(ng-click="signup()" type="submit" class="btn btn-primary") Sign up
-		div.col-sm-2
+		div.col-sm-6 
+			button(ng-click="signup()" class="btn btn-primary pull-right") Sign up
+		div.col-sm-6
 			button(ng-click="login()" type="submit" class="btn btn-primary") Login

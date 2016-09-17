@@ -10,6 +10,13 @@ app.controller('MainCtrl', function($scope){
 	//Key press
 	$scope.press = function($event){
 		console.log("detected key press on client side");
+		socket.emit('join room', 'lobby');
+		setTimeout(10000);
 		socket.emit('key press', $event.keyCode);
 	};
+
+	socket.on('key received', function($letter){
+		console.log($letter);
+		console.log("key received");
+	});
 });
