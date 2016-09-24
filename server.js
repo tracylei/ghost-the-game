@@ -61,6 +61,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
 });
+app.get('/room/:roomNum', isAuthenticated, function(req, res){
+	res.render('index');
+});
 app.get('*', isAuthenticated, function(req, res){
 	res.render('index');
 });
