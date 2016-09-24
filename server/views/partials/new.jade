@@ -1,10 +1,7 @@
 div.well(style="width: 50%; margin: 10% auto;")
 	form(role="form" style="margin: 5% 10% 2% 10%")
-		input.form-control(type="text" ng-model="roomNum")
+		label Room Number
+		input.form-control(type="text" ng-model="roomId")
 	div.container-fluid
-		div.col-sm-6
-			button(class="btn btn-primary pull-right" ng-click="createRoom()" style="margin-right:10px") Create Room
-		div.col-sm-1
-			p(style="text-align: center") or
-		div.col-sm-5
-			button(class="btn btn-primary" ng-click="joinRoom()") Join Room
+		div.col-sm-12
+			button(class="btn btn-primary center-block" ng-click="joinRoom()" style="width: 100px") Join

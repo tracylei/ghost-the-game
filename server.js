@@ -46,7 +46,7 @@ app.use(session(
 		saveUninitialized: true
 }));
 function isAuthenticated(req, res, next){
-	if(req.session.user == null){
+	if(req.session.passport == null){
 		res.redirect('/login');
 	}else{
 		next();
@@ -61,9 +61,6 @@ app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
 });
-app.get('/new', isAuthenticated, function(req, res){
-	res.render('new');
-})
 app.get('*', isAuthenticated, function(req, res){
 	res.render('index');
 });
@@ -75,12 +72,24 @@ server.listen(port, function(){
 	console.log('Listening on port ' + port + '...');
 });
 
+var rooms = {}; //room - users
+var users = {}; //user - room
+
 var io = require('socket.io').listen(server);
 
 io.on('connection', function(socket){
 	console.log("connected");
-	
+	socket.join('lobby');
+
 	socket.on('disconnect', function() {
+		var id = socket.rooms[socket.id];
+		//If user joined a room
+		if(users[id] != null){
+			//Delete the user from the user list of the associated room
+			var ind = rooms[user[id]].indexOf(id);
+			rooms[user[id]].splice(ind, 1);
+			socket.leave(user[id]);
+		}
 	    io.emit('user disconnected');
 	    console.log('disconnected');
 	});
@@ -92,7 +101,16 @@ io.on('connection', function(socket){
 		socket.broadcast.to(socket.rooms[socket.id]).emit('key received', letter);
 	});
 	socket.on('join room', function(room){
-		console.log("joining room");
+		console.log("joining room " + room + " server");
+		if(rooms[room] == null) //room is empty
+			rooms[room] = [socket.rooms[socket.id]];
+		else //room is not empty
+			rooms[room].push(socket.rooms[socket.id]);
+		users[socket.rooms[socket.id]] = room;
+		console.log(rooms);
 		socket.join(room); //join() is asynchronous!
+
+		//Notify client side so url is changed
+		io.sockets.connected[socket.id].emit("joined room", room);
 	})
 });

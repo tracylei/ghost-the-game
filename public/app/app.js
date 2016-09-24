@@ -4,7 +4,7 @@ var app = angular.module('app', ['ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider){
 
-	$urlRouterProvider.otherwise('/');
+	//$urlRouterProvider.otherwise('/');
 
 	$stateProvider
 		.state('login', {
@@ -15,10 +15,10 @@ app.config(function($stateProvider, $urlRouterProvider){
 		.state('new', {
 			url: '/new',
 			templateUrl: 'partials/new',
-			controller: 'NewRoomCtrl'
+			controller: 'MainCtrl'
 		})
-		.state('home', {
-			url: '/',
+		.state('index', {
+			url:'/room/{roomId:[0-9]*}',
 			views: {
 				'':{
 					templateUrl: 'partials/home',
