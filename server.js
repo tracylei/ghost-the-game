@@ -37,16 +37,17 @@ app.use(stylus.middleware(
 		compile: compile //Config object's compile function
 	}
 ));
+app.use(session(
+    {
+        secret: 'securedsession',
+        resave: false,
+        saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session(
-	{
-		secret: 'securedsession',
-		resave: false,
-		saveUninitialized: true
-}));
+
 function isAuthenticated(req, res, next){
-	if(req.session.passport == null){
+	if(!req.isAuthenticated()){
 		res.redirect('/login');
 	}else{
 		next();
