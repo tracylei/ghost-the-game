@@ -12,4 +12,6 @@ app.service('UserService', function($http){
 			return response.data;
 		});
 	};
+
+    
 });

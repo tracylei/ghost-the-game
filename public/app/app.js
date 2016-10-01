@@ -7,6 +7,10 @@ app.config(function($stateProvider, $urlRouterProvider){
 	//$urlRouterProvider.otherwise('/');
 
 	$stateProvider
+		.state('welcome', {
+			url:'/',
+			templateUrl: 'partials/welcome'
+		})
 		.state('login', {
 			url: '/login',
 			templateUrl: 'partials/login',

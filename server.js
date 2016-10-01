@@ -83,6 +83,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/partials/:partialPath', function(req, res){
 	res.render('partials/' + req.params.partialPath);
 });
+app.get('/', function(req, res){
+    res.render('index');
+});
 app.get('/room/:roomNum', isAuthenticated, function(req, res){
 	res.render('index');
 });
@@ -127,14 +130,24 @@ io.on('connection', function(socket){
 	socket.on('join room', function(room){
 		console.log("joining room " + room + " server");
         console.log("socket.request.user: " + JSON.stringify(socket.request.user));
-		if(rooms[room] == null) //room is empty
-			rooms[room] = [socket.rooms[socket.id]];
-		else //room is not empty
-			rooms[room].push(socket.rooms[socket.id]);
-		users[socket.rooms[socket.id]] = room;
-		console.log(rooms);
+		if(rooms[room] == null){ //room is empty
+			rooms[room] = [socket.request.user.username];
+        }
+		else {//room is not empty
+            rooms[room].push(socket.request.user.username);
+        }
+		if(users[socket.request.user.username]){
+            console.log(users[socket.request.user.username]);
+            users[socket.request.user.username].push(room);
+        }
+        else{
+            users[socket.request.user.username] = [room];
+        }
+
 		socket.join(room); //join() is asynchronous!
 
+        console.log("users:" + JSON.stringify(users));
+        console.log("rooms:" + JSON.stringify(rooms));
 		//Notify client side so url is changed
 		io.sockets.connected[socket.id].emit("joined room", room);
 	})
