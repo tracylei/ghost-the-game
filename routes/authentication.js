@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, {_id: user.id});
+    done(null, {_id: user.id, username: user.username});
 });
 passport.deserializeUser(function(user, done) {
     done(null, user);
