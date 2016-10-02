@@ -11,7 +11,5 @@ app.service('UserService', function($http){
 		return $http.post('/signup', {"username": username, "password": password}).then(function(response){
 			return response.data;
 		});
-	};
-
-    
+	};    
 });

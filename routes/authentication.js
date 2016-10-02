@@ -25,7 +25,10 @@ passport.deserializeUser(function(user, done) {
 
 router.route('/login')
 	.get(function(req, res){
-		res.render('index');
+        if(!req.isAuthenticated())
+            res.render('index');
+        else
+            res.redirect('/');
 	})
 	.post(passport.authenticate('local'), function(req, res){
 		res.sendStatus(200);

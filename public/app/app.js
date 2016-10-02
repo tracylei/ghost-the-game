@@ -8,8 +8,12 @@ app.config(function($stateProvider, $urlRouterProvider){
 
 	$stateProvider
 		.state('welcome', {
+			url:'/welcome',
+			templateUrl: 'partials/welcome',
+		})
+		.state('landing', {
 			url:'/',
-			templateUrl: 'partials/welcome'
+			templateUrl: 'partials/landing',
 		})
 		.state('login', {
 			url: '/login',
