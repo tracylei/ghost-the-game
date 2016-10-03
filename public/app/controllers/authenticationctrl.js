@@ -1,6 +1,6 @@
 var app = angular.module('app');
 
-app.controller('LoginCtrl', function($scope, $http, $location, UserService){
+app.controller('AuthenticationCtrl', function($scope, $http, $location, UserService){
 	console.log("loading login ctrl");
 	$scope.login = function(){
 		console.log("attempting to log in");

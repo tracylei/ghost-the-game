@@ -35,6 +35,12 @@ router.route('/login')
 	});
 
 router.route('/signup')
+    .get(function(req, res){
+        if(!req.isAuthenticated())
+            res.render('index');
+        else
+            res.redirect('/');
+    })
 	.post(function(req, res){
 
 		User.findOne({'username': req.body.username}, function(user){
