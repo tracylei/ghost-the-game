@@ -9,19 +9,19 @@ app.config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state('welcome', {
 			url:'/welcome',
-			templateUrl: 'partials/welcome',
+			templateUrl: 'partials/welcome'
 		})
 		.state('landing', {
 			url:'/',
-			templateUrl: 'partials/landing',
+			templateUrl: 'partials/landing'
 		})
 		.state('login', {
 			url: '/login',
 			templateUrl: 'partials/login',
 			controller: 'LoginCtrl'
 		})
-		.state('new', {
-			url: '/new',
+		.state('join', {
+			url: '/join',
 			templateUrl: 'partials/new',
 			controller: 'MainCtrl'
 		})

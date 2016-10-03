@@ -6,7 +6,7 @@ app.controller('LoginCtrl', function($scope, $http, $location, UserService){
 		console.log("attempting to log in");
 		UserService.login($scope.username, $scope.password).then(function success(data){
 			console.log("Auth success");
-			$location.url('/new');
+			$location.url('/join');
 		}, function error(data){
 			console.log("Auth failed");
 		});

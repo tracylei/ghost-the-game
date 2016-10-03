@@ -1,4 +1,5 @@
 
+"use strict";
 // ========================== Modules ==========================
 var express 		= require('express');
 var stylus 			= require('stylus');
@@ -134,26 +135,24 @@ io.on('connection', function(socket){
 		socket.broadcast.to(socket.rooms[socket.id]).emit('key received', letter);
 	});
 	socket.on('join room', function(room){
+        socket.join(room); //join() is asynchronous!
+
 		console.log("joining room " + room + " server");
         console.log("socket.request.user: " + JSON.stringify(socket.request.user));
+        var username = socket.request.user.username;
 		if(rooms[room] == null){ //room is empty
-			rooms[room] = [socket.request.user.username];
+			rooms[room] = new Set([username]);
         }
 		else {//room is not empty
-            rooms[room].push(socket.request.user.username);
+            rooms[room].add(username);
         }
-		if(users[socket.request.user.username]){
-            console.log(users[socket.request.user.username]);
-            users[socket.request.user.username].push(room);
+		if(users[socket.request.user.username] == null){
+            users[username] = new Set([room]);
         }
         else{
-            users[socket.request.user.username] = [room];
+            users[username].add(room);
         }
-
-		socket.join(room); //join() is asynchronous!
-
-        console.log("users:" + JSON.stringify(users));
-        console.log("rooms:" + JSON.stringify(rooms));
+        
 		//Notify client side so url is changed
 		io.sockets.connected[socket.id].emit("joined room", room);
 	})
