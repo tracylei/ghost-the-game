@@ -152,8 +152,10 @@ io.on('connection', function(socket){
         else{
             users[username].add(room);
         }
-        
+
+        console.log("num players in room: " + rooms[room].size);
+
 		//Notify client side so url is changed
-		io.sockets.connected[socket.id].emit("joined room", room);
+		io.sockets.in(room).emit("joined room", {room: room, numPlayers:rooms[room].size});
 	})
 });

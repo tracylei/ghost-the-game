@@ -46,15 +46,21 @@ app.controller('MainCtrl', function($scope, $window, $http, $location){
 			console.log("Please enter a valid room number");
 	};
 
-    //$scope.totalInRoom = 0;
+    $scope.topRightCaption = 'There are currently 0 users in this room.';
 
-	socket.on('joined room', function(room){
-        // $scope.totalInRoom = totalInRoom;
-        // $scope.playerNum = playerNum;
-        if($location.url() != '/room/' + room){
-            console.log("attempting to change url");
-            $location.url('/room/' + room);
-            $scope.$apply();
+	socket.on('joined room', function(data){
+        console.log("changing total in room to: " + data.numPlayers)
+        if(data.numPlayers == 1){
+            $scope.topRightCaption = 'There is currently 1 user in this room.';
         }
+        else{
+            $scope.topRightCaption = 'There are currently ' + data.numPlayers + ' users in this room.';
+        }
+        $scope.playerNum = data.numPlayers;
+        if($location.url() != '/room/' + data.room){
+            console.log("attempting to change url");
+            $location.url('/room/' + data.room);
+        }
+        $scope.$apply();
 	});
 });
